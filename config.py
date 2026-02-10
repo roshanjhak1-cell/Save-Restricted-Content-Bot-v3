@@ -27,10 +27,16 @@ MONGO_DB     = os.getenv("MONGO_DB", "")
 DB_NAME      = os.getenv("DB_NAME", "telegram_downloader")
 
 # ─── OWNER / CONTROL SETTINGS ───────────────────────────────────────────────────
-OWNER_ID     = list(map(int, os.getenv("OWNER_ID", "").split()))  # space-separated list
+OWNER_ID     = list(map(int, os.getenv("OWNER_ID", "").split())) if os.getenv("OWNER_ID") else [] # space-separated list
 STRING       = os.getenv("STRING", None)  # optional session string
-LOG_GROUP    = int(os.getenv("LOG_GROUP", ""))
-FORCE_SUB    = int(os.getenv("FORCE_SUB", ""))
+
+# --- FIX: Handle Empty LOG_GROUP & FORCE_SUB safely ---
+LOG_GROUP_VAR = os.getenv("LOG_GROUP", "")
+LOG_GROUP = int(LOG_GROUP_VAR) if LOG_GROUP_VAR and LOG_GROUP_VAR.strip() else 0
+
+FORCE_SUB_VAR = os.getenv("FORCE_SUB", "")
+FORCE_SUB = int(FORCE_SUB_VAR) if FORCE_SUB_VAR and FORCE_SUB_VAR.strip() else 0
+# ------------------------------------------------------
 
 # ─── SECURITY KEYS ──────────────────────────────────────────────────────────────
 MASTER_KEY   = os.getenv("MASTER_KEY", "gK8HzLfT9QpViJcYeB5wRa3DmN7P2xUq")  # session encryption
@@ -76,4 +82,3 @@ P0 = {
 # ════════════════════════════════════════════════════════════════════════════════
 # ░ DEVGAGAN
 # ════════════════════════════════════════════════════════════════════════════════
-
